@@ -1,0 +1,90 @@
+@use './variables' as *;
+
+.uploadContainer {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+}
+
+.dropZone {
+  position: relative;
+  border: 2px dashed $border-default;
+  border-radius: $border-radius-md;
+  padding: $spacing-3xl;
+  text-align: center;
+  transition: $transition-base;
+  cursor: pointer;
+  background-color: transparent;
+
+  &:hover {
+    border-color: $color-primary;
+  }
+
+  &.dragging {
+    border-color: $color-primary;
+    background-color: rgba($color-primary, 0.05);
+  }
+
+  &.processing {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.uploadIcon {
+  font-size: 64px;
+  color: $color-gray;
+  margin-bottom: $spacing-md;
+}
+
+.loadingSpinner {
+  margin-bottom: $spacing-lg;
+}
+
+.uploadTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin-bottom: $spacing-sm;
+}
+
+.uploadSubtitle {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+
+.fileName {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  margin-top: $spacing-sm;
+}
+
+.errorAlert {
+  margin-top: $spacing-md;
+  padding: $spacing-md;
+  background-color: rgba($color-warning, 0.1);
+  border: 1px solid $color-warning;
+  border-radius: $border-radius-md;
+  color: $color-warning;
+
+  p {
+    margin: 0;
+  }
+}
+
+.infoText {
+  margin-top: $spacing-lg;
+  text-align: center;
+
+  p {
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    margin: $spacing-xs 0;
+  }
+}
+
+.hiddenInput {
+  display: none;
+}

@@ -6,12 +6,28 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:prompts": "promptfoo eval",
+    "test:prompts:view": "promptfoo view",
+    "generate:dataset": "python3 scripts/generate_dataset.py",
+    "ml:help": "echo 'ML Upgrade Commands:\n  npm run generate:dataset - Generate training data\n  npm run ml:train - Open training guide\n' && cat QUICK_START_ML.md"
   },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.21",
+    "@ai-sdk/groq": "^3.0.21",
+    "@ai-sdk/react": "^3.0.76",
+    "ai": "^6.0.74",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.563.0",
     "next": "16.1.6",
+    "ollama": "^0.6.3",
+    "pdfreader": "^3.0.8",
+    "radix-ui": "^1.4.3",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "sass": "^1.97.3",
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -20,7 +36,10 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "promptfoo": "^0.120.19",
+    "shadcn": "^3.8.4",
     "tailwindcss": "^4",
+    "tw-animate-css": "^1.4.0",
     "typescript": "^5"
   }
 }
