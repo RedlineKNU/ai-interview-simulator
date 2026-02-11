@@ -33,6 +33,10 @@ export default function InterviewPage() {
     router.push('/');
   };
 
+  const handleBackToAnalysis = () => {
+    router.push('/analysis');
+  };
+
   if (loading) {
     return (
       <div style={{
@@ -50,5 +54,11 @@ export default function InterviewPage() {
     return null; // Will redirect in useEffect
   }
 
-  return <ChatInterface resumeData={resumeData} onReset={handleReset} />;
+  return (
+    <ChatInterface
+      resumeData={resumeData}
+      onReset={handleReset}
+      onBackToAnalysis={handleBackToAnalysis}
+    />
+  );
 }

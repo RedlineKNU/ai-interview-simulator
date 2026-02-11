@@ -1,6 +1,18 @@
 'use client';
 
-import { useState, useEffect, useRef, FormEvent } from 'react';
+import { useState, useEffect, useRef, SyntheticEvent } from 'react';
+import {
+  Box,
+  AppBar,
+  Toolbar,
+  Typography,
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
+import { Send } from '@mui/icons-material';
 import { ResumeData } from '@/types/resume';
 import styles from '@/styles/ChatInterface.module.scss';
 
@@ -13,9 +25,10 @@ interface Message {
 interface ChatInterfaceProps {
   resumeData: ResumeData;
   onReset: () => void;
+  onBackToAnalysis: () => void;
 }
 
-export function ChatInterface({ resumeData, onReset }: ChatInterfaceProps) {
+export function ChatInterface({ resumeData, onReset, onBackToAnalysis }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -30,8 +43,8 @@ export function ChatInterface({ resumeData, onReset }: ChatInterfaceProps) {
     }
   }, [messages]);
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: SyntheticEvent) => {
+    e?.preventDefault();
     if (!input.trim() || isLoading) return;
 
     const userMessage: Message = {
@@ -116,52 +129,56 @@ export function ChatInterface({ resumeData, onReset }: ChatInterfaceProps) {
   return (
     <div className={styles.chatContainer}>
       {/* Header */}
-      <header className={styles.header}>
-        <div className={styles.toolbar}>
-          <div className={styles.headerLeft}>
-            <div className={styles.avatar}>💼</div>
-            <div className={styles.headerInfo}>
-              <h1>Technical Interview Simulator</h1>
-              <p>Interviewing: {resumeData.name}</p>
-            </div>
-          </div>
+      <AppBar position="static" elevation={0} color="inherit" className={styles.header}>
+        <Toolbar sx={{ justifyContent: 'space-between', px: 3, py: 1, minHeight: 'auto' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box className={styles.avatar}>💼</Box>
+            <Box>
+              <Typography variant="h6" component="h1" sx={{ fontWeight: 600, lineHeight: 1.2 }}>
+                Technical Interview Simulator
+              </Typography>
+              <Typography variant="caption" component="p" sx={{ opacity: 0.85, mt: 0.25 }}>
+                Interviewing: {resumeData.name}
+              </Typography>
+            </Box>
+          </Box>
 
-          <div className={styles.headerRight}>
-            {/* Difficulty Selector */}
-            <div className={styles.selectorGroup}>
-              <label htmlFor="difficulty-select">Difficulty</label>
-              <select
-                id="difficulty-select"
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <FormControl size="small" sx={{ minWidth: 140 }} className={styles.selectorGroup}>
+              <InputLabel>Difficulty</InputLabel>
+              <Select
                 value={difficulty}
+                label="Difficulty"
                 onChange={(e) => setDifficulty(e.target.value as 'junior' | 'middle' | 'senior')}
-                className="btn-secondary"
               >
-                <option value="junior">Junior</option>
-                <option value="middle">Middle</option>
-                <option value="senior">Senior</option>
-              </select>
-            </div>
+                <MenuItem value="junior">Junior</MenuItem>
+                <MenuItem value="middle">Middle</MenuItem>
+                <MenuItem value="senior">Senior</MenuItem>
+              </Select>
+            </FormControl>
 
-            {/* Model Selector */}
-            <div className={styles.selectorGroup}>
-              <label htmlFor="model-select">Model</label>
-              <select
-                id="model-select"
+            <FormControl size="small" sx={{ minWidth: 150 }} className={styles.selectorGroup}>
+              <InputLabel>Model</InputLabel>
+              <Select
                 value={selectedModel}
+                label="Model"
                 onChange={(e) => setSelectedModel(e.target.value as 'cloud' | 'local')}
-                className="btn-secondary"
               >
-                <option value="cloud">Cloud (Fast)</option>
-                <option value="local">Local (Custom)</option>
-              </select>
-            </div>
+                <MenuItem value="cloud">Cloud (Fast)</MenuItem>
+                <MenuItem value="local">Local (Custom)</MenuItem>
+              </Select>
+            </FormControl>
 
-            <button onClick={onReset} className="btn-secondary">
+            <button onClick={onBackToAnalysis} className="btn-secondary" style={{ minWidth: '160px' }}>
+              Back to Analysis
+            </button>
+
+            <button onClick={onReset} className="btn-secondary" style={{ minWidth: '180px' }}>
               Upload New Resume
             </button>
-          </div>
-        </div>
-      </header>
+          </Box>
+        </Toolbar>
+      </AppBar>
 
       {/* Chat Messages */}
       <div className={styles.messagesArea}>
@@ -203,8 +220,11 @@ export function ChatInterface({ resumeData, onReset }: ChatInterfaceProps) {
       {/* Input Form */}
       <div className={styles.inputArea}>
         <div className={styles.inputContainer}>
-          <form onSubmit={handleSubmit} className={styles.inputForm}>
-            <textarea
+          <Box component="form" onSubmit={handleSubmit} className={styles.inputForm}>
+            <TextField
+              fullWidth
+              multiline
+              maxRows={4}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your answer here..."
@@ -215,20 +235,23 @@ export function ChatInterface({ resumeData, onReset }: ChatInterfaceProps) {
                   handleSubmit(e);
                 }
               }}
-              rows={3}
               className={styles.textField}
             />
+          </Box>
+          <div className={styles.sendButtonRow}>
             <button
-              type="submit"
-              disabled={isLoading || !input.trim()}
+              type="button"
+              onClick={() => handleSubmit()}
               className={`btn-primary ${styles.sendButton}`}
+              disabled={isLoading || !input.trim()}
             >
-              Send ➤
+              <span>Send</span>
+              <Send fontSize="small" />
             </button>
-          </form>
-          <p className={styles.hint}>
+          </div>
+          <Typography variant="caption" className={styles.hint}>
             Press Enter to send, Shift+Enter for new line
-          </p>
+          </Typography>
         </div>
       </div>
     </div>

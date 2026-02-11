@@ -1,33 +1,26 @@
 'use client';
 
 import { createTheme, ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 
 const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#6366f1', // Indigo
-      light: '#818cf8',
-      dark: '#4f46e5',
+      main: '#6366f1', // Your blue color
     },
     secondary: {
-      main: '#8b5cf6', // Purple
-      light: '#a78bfa',
-      dark: '#7c3aed',
-    },
-    success: {
-      main: '#10b981',
+      main: '#10b981', // Your green color
     },
     warning: {
-      main: '#f59e0b',
-    },
-    error: {
-      main: '#ef4444',
+      main: '#f59e0b', // Your orange color
     },
     background: {
-      default: '#f9fafb',
+      default: '#f3f4f6',
       paper: '#ffffff',
+    },
+    text: {
+      primary: '#111827',
+      secondary: '#6b7280',
     },
   },
   typography: {
@@ -37,18 +30,11 @@ const theme = createTheme({
     borderRadius: 8,
   },
   components: {
-    MuiButton: {
+    MuiCssBaseline: {
       styleOverrides: {
-        root: {
-          textTransform: 'none',
-          fontWeight: 600,
-        },
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+        body: {
+          margin: 0,
+          padding: 0,
         },
       },
     },
@@ -58,7 +44,6 @@ const theme = createTheme({
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <MUIThemeProvider theme={theme}>
-      <CssBaseline />
       {children}
     </MUIThemeProvider>
   );

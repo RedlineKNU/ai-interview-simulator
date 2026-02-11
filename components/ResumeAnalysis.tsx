@@ -124,13 +124,27 @@ export function ResumeAnalysis({ resumeData, onStartInterview, onBack }: ResumeA
                 {analysis.summary}
               </p>
             </div>
-            <div style={{ textAlign: 'center' }}>
-              <div className={getScoreColor(analysis.overallScore)} style={{ fontSize: '4rem', fontWeight: 'bold', lineHeight: 1 }}>
-                {analysis.overallScore}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+              }}
+            >
+              <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '0.5rem' }}>
+                <div
+                  className={getScoreColor(analysis.overallScore)}
+                  style={{ fontSize: '4rem', fontWeight: 'bold', lineHeight: 1 }}
+                >
+                  {analysis.overallScore}
+                </div>
+                <p
+                  style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}
+                >
+                  out of 100
+                </p>
               </div>
-              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>
-                out of 100
-              </p>
               <div className="chip" style={{ marginTop: '0.5rem' }}>
                 {getScoreLabel(analysis.overallScore)}
               </div>
