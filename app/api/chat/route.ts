@@ -12,91 +12,18 @@ type ChatMessage = {
 };
 
 /**
- * Handle local Ollama model requests
- */
-async function handleLocalModel(
-  systemPrompt: string,
-  messages: ChatMessage[]
-) {
-  try {
-    console.log('🏠 Using Local Ollama Model');
-
-    const { Ollama } = await import('ollama');
-    const ollama = new Ollama({ host: 'http://localhost:11434' });
-
-    // Build conversation history with embedded system prompt in first message
-    const conversationHistory = [...messages];
-
-    // Embed system prompt into first user message for better adherence
-    if (conversationHistory.length > 0 && conversationHistory[0].role === 'user') {
-      conversationHistory[0] = {
-        ...conversationHistory[0],
-        content: `${systemPrompt}\n\nUser: ${conversationHistory[0].content}`
-      };
-    }
-
-    const stream = await ollama.chat({
-      model: 'socratic-interviewer',
-      messages: conversationHistory.map(m => ({
-        role: m.role as 'user' | 'assistant',
-        content: m.content,
-      })),
-      stream: true,
-    });
-
-    // Create a readable stream for the response
-    const encoder = new TextEncoder();
-    const readableStream = new ReadableStream({
-      async start(controller) {
-        try {
-          for await (const chunk of stream) {
-            if (chunk.message?.content) {
-              controller.enqueue(encoder.encode(chunk.message.content));
-            }
-          }
-          controller.close();
-        } catch (error) {
-          controller.error(error);
-        }
-      },
-    });
-
-    return new Response(readableStream, {
-      headers: {
-        'Content-Type': 'text/plain; charset=utf-8',
-      },
-    });
-
-  } catch (error: any) {
-    console.error('❌ Local model error:', error.message);
-    return new Response(
-      JSON.stringify({
-        error: 'Local model failed. Please ensure Ollama is running with socratic-interviewer model.',
-        details: error.message,
-      }),
-      {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
-  }
-}
-
-/**
  * Chat API Route with Hybrid Cloud Fallback Pattern
  * Primary: Groq (llama-3.3-70b-versatile) - Fast, free tier
  * Fallback: Google Gemini (gemini-2.0-flash) - Rate limit resilient
- * Local: Ollama (socratic-interviewer) - Custom fine-tuned model
  */
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     console.log('📥 Received chat request');
 
-    const { messages, resumeData, model = 'cloud', difficulty = 'middle' } = body as {
+    const { messages, resumeData, difficulty = 'middle' } = body as {
       messages: ChatMessage[];
       resumeData: ResumeData;
-      model?: 'cloud' | 'local';
       difficulty?: 'junior' | 'middle' | 'senior';
     };
 
@@ -107,7 +34,6 @@ export async function POST(req: Request) {
 
     console.log('✅ Candidate:', resumeData.name);
     console.log('✅ Messages:', messages?.length || 0);
-    console.log('🤖 Model:', model);
     console.log('📊 Difficulty:', difficulty);
 
     // Generate system prompt with resume context and difficulty
@@ -118,12 +44,6 @@ export async function POST(req: Request) {
       role: m.role,
       content: m.content,
     }));
-
-    // Route based on model selection
-    if (model === 'local') {
-      // Use Ollama local model
-      return handleLocalModel(systemPrompt, formattedMessages);
-    }
 
     // Strategy 1: Try Groq first (fastest, 70B model)
     try {

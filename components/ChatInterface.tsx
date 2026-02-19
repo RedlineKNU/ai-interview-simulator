@@ -32,7 +32,6 @@ export function ChatInterface({ resumeData, onReset, onBackToAnalysis }: ChatInt
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState<'cloud' | 'local'>('cloud');
   const [difficulty, setDifficulty] = useState<'junior' | 'middle' | 'senior'>('middle');
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -69,7 +68,6 @@ export function ChatInterface({ resumeData, onReset, onBackToAnalysis }: ChatInt
             content: m.content,
           })),
           resumeData,
-          model: selectedModel,
           difficulty,
         }),
       });
@@ -154,18 +152,6 @@ export function ChatInterface({ resumeData, onReset, onBackToAnalysis }: ChatInt
                 <MenuItem value="junior">Junior</MenuItem>
                 <MenuItem value="middle">Middle</MenuItem>
                 <MenuItem value="senior">Senior</MenuItem>
-              </Select>
-            </FormControl>
-
-            <FormControl size="small" sx={{ minWidth: 150 }} className={styles.selectorGroup}>
-              <InputLabel>Model</InputLabel>
-              <Select
-                value={selectedModel}
-                label="Model"
-                onChange={(e) => setSelectedModel(e.target.value as 'cloud' | 'local')}
-              >
-                <MenuItem value="cloud">Cloud (Fast)</MenuItem>
-                <MenuItem value="local">Local (Custom)</MenuItem>
               </Select>
             </FormControl>
 
