@@ -6,12 +6,17 @@ import { generateInterviewerSystemPrompt } from '@/lib/prompts';
 
 export const maxDuration = 30;
 
+type ChatMessage = {
+  role: 'user' | 'assistant';
+  content: string;
+};
+
 /**
  * Handle local Ollama model requests
  */
 async function handleLocalModel(
   systemPrompt: string,
-  messages: { role: string; content: string }[]
+  messages: ChatMessage[]
 ) {
   try {
     console.log('🏠 Using Local Ollama Model');
@@ -89,7 +94,7 @@ export async function POST(req: Request) {
     console.log('📥 Received chat request');
 
     const { messages, resumeData, model = 'cloud', difficulty = 'middle' } = body as {
-      messages: { role: string; content: string }[];
+      messages: ChatMessage[];
       resumeData: ResumeData;
       model?: 'cloud' | 'local';
       difficulty?: 'junior' | 'middle' | 'senior';
@@ -109,9 +114,9 @@ export async function POST(req: Request) {
     const systemPrompt = generateInterviewerSystemPrompt(resumeData, difficulty);
 
     // Format messages
-    const formattedMessages = messages.map(m => ({
+    const formattedMessages: ChatMessage[] = messages.map(m => ({
       role: m.role,
-      content: m.content
+      content: m.content,
     }));
 
     // Route based on model selection

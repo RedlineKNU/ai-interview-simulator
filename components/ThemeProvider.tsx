@@ -6,13 +6,13 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#6366f1', // Your blue color
+      main: '#6366f1',
     },
     secondary: {
-      main: '#10b981', // Your green color
+      main: '#10b981',
     },
     warning: {
-      main: '#f59e0b', // Your orange color
+      main: '#f59e0b',
     },
     background: {
       default: '#f3f4f6',

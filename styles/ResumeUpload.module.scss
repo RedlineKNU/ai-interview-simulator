@@ -88,3 +88,15 @@
 .hiddenInput {
   display: none;
 }
+
+.uploadLabel {
+  cursor: pointer;
+  display: block;
+}
+
+.uploadContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-md;
+}

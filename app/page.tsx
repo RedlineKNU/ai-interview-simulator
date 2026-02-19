@@ -9,9 +9,7 @@ export default function Home() {
   const router = useRouter();
 
   const handleResumeExtracted = (data: ResumeData) => {
-    // Store resume data in localStorage
-    localStorage.setItem('resumeData', JSON.stringify(data));
-    // Navigate to analysis page
+    localStorage.setItem('resumeData', JSON.stringify(data)); 
     router.push('/analysis');
   };
 

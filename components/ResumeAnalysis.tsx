@@ -62,9 +62,9 @@ export function ResumeAnalysis({ resumeData, onStartInterview, onBack }: ResumeA
     return (
       <div className={styles.loadingContainer}>
         <div className={`card ${styles.loadingCard}`}>
-          <div style={{ fontSize: '64px', marginBottom: '1.5rem' }}>⏳</div>
-          <h2 style={{ marginBottom: '0.5rem' }}>Analyzing Your Resume</h2>
-          <p style={{ color: 'var(--text-secondary)' }}>
+          <div className={styles.statusIcon}>⏳</div>
+          <h2 className={styles.statusTitle}>Analyzing Your Resume</h2>
+          <p className={styles.statusSubtitle}>
             Our AI is evaluating your experience, skills, and qualifications...
           </p>
         </div>
@@ -76,9 +76,9 @@ export function ResumeAnalysis({ resumeData, onStartInterview, onBack }: ResumeA
     return (
       <div className={styles.errorContainer}>
         <div className={`card ${styles.errorCard}`}>
-          <div style={{ fontSize: '64px', marginBottom: '1.5rem' }}>⚠️</div>
-          <h2 style={{ marginBottom: '0.5rem' }}>Analysis Failed</h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+          <div className={styles.statusIcon}>⚠️</div>
+          <h2 className={styles.statusTitle}>Analysis Failed</h2>
+          <p className={`${styles.statusSubtitle} ${styles.errorMessage}`}>
             {error}
           </p>
           <button onClick={onBack} className="btn-secondary">
@@ -117,35 +117,25 @@ export function ResumeAnalysis({ resumeData, onStartInterview, onBack }: ResumeA
 
         {/* Overall Score Card */}
         <div className={`card ${styles.overallScoreCard}`}>
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem', alignItems: 'center' }}>
+          <div className={styles.overallScoreLayout}>
             <div>
-              <h2 style={{ marginBottom: '1rem' }}>Overall Resume Score</h2>
-              <p style={{ lineHeight: '1.7', color: 'var(--text-secondary)' }}>
+              <h2 className={styles.overallScoreText}>Overall Resume Score</h2>
+              <p className={styles.overallScoreDescription}>
                 {analysis.summary}
               </p>
             </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textAlign: 'center',
-              }}
-            >
-              <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '0.5rem' }}>
+            <div className={styles.overallScoreDetails}>
+              <div className={styles.overallScoreValueWrapper}>
                 <div
-                  className={getScoreColor(analysis.overallScore)}
-                  style={{ fontSize: '4rem', fontWeight: 'bold', lineHeight: 1 }}
+                  className={`${styles.overallScoreValue} ${getScoreColor(analysis.overallScore)}`}
                 >
                   {analysis.overallScore}
                 </div>
-                <p
-                  style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}
-                >
+                <p className={styles.overallScoreSuffix}>
                   out of 100
                 </p>
               </div>
-              <div className="chip" style={{ marginTop: '0.5rem' }}>
+              <div className={`chip ${styles.scoreChip}`}>
                 {getScoreLabel(analysis.overallScore)}
               </div>
             </div>
@@ -157,7 +147,7 @@ export function ResumeAnalysis({ resumeData, onStartInterview, onBack }: ResumeA
           {/* Skills Score */}
           <div className={`card ${styles.scoreCard}`}>
             <div className={styles.cardHeader}>
-              <span style={{ fontSize: '28px' }}>🎯</span>
+              <span className={styles.cardIcon}>🎯</span>
               <h3>Skills Assessment</h3>
             </div>
 
@@ -197,7 +187,7 @@ export function ResumeAnalysis({ resumeData, onStartInterview, onBack }: ResumeA
           {/* Experience Score */}
           <div className={`card ${styles.scoreCard}`}>
             <div className={styles.cardHeader}>
-              <span style={{ fontSize: '28px' }}>💼</span>
+              <span className={styles.cardIcon}>💼</span>
               <h3>Experience Quality</h3>
             </div>
 
@@ -234,7 +224,7 @@ export function ResumeAnalysis({ resumeData, onStartInterview, onBack }: ResumeA
           {/* Education Score */}
           <div className={`card ${styles.scoreCard}`}>
             <div className={styles.cardHeader}>
-              <span style={{ fontSize: '28px' }}>🎓</span>
+              <span className={styles.cardIcon}>🎓</span>
               <h3>Education Level</h3>
             </div>
 
@@ -274,13 +264,13 @@ export function ResumeAnalysis({ resumeData, onStartInterview, onBack }: ResumeA
           {/* Strengths */}
           <div className={`card ${styles.listCard}`}>
             <div className={styles.listHeader}>
-              <span style={{ fontSize: '28px', color: 'var(--color-success)' }}>🏆</span>
+              <span className={`${styles.cardIcon} ${styles.successIcon}`}>🏆</span>
               <h3>Key Strengths</h3>
             </div>
             <ul>
               {analysis.strengths.map((strength, index) => (
                 <li key={index}>
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style={{ color: 'var(--color-success)' }}>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" className={styles.successIcon}>
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   <span>{strength}</span>
@@ -292,13 +282,13 @@ export function ResumeAnalysis({ resumeData, onStartInterview, onBack }: ResumeA
           {/* Areas for Improvement */}
           <div className={`card ${styles.listCard}`}>
             <div className={styles.listHeader}>
-              <span style={{ fontSize: '28px', color: 'var(--color-warning)' }}>📈</span>
+              <span className={`${styles.cardIcon} ${styles.warningIcon}`}>📈</span>
               <h3>Areas for Improvement</h3>
             </div>
             <ul>
               {analysis.weaknesses.map((weakness, index) => (
                 <li key={index}>
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style={{ color: 'var(--color-warning)' }}>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" className={styles.warningIcon}>
                     <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
                   <span>{weakness}</span>
@@ -330,15 +320,13 @@ export function ResumeAnalysis({ resumeData, onStartInterview, onBack }: ResumeA
         <div className={styles.actionButtons}>
           <button
             onClick={onBack}
-            className="btn-secondary"
-            style={{ minWidth: '200px' }}
+            className={`btn-secondary ${styles.secondaryAction}`}
           >
             Upload Different Resume
           </button>
           <button
             onClick={onStartInterview}
-            className="btn-primary"
-            style={{ minWidth: '250px' }}
+            className={`btn-primary ${styles.primaryAction}`}
           >
             Start Technical Interview
           </button>

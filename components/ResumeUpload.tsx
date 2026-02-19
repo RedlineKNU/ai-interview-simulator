@@ -92,9 +92,9 @@ export function ResumeUpload({ onResumeExtracted }: ResumeUploadProps) {
           disabled={isProcessing}
         />
 
-        <label htmlFor="resume-upload" style={{ cursor: 'pointer', display: 'block' }}>
+        <label htmlFor="resume-upload" className={styles.uploadLabel}>
           {isProcessing ? (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+            <div className={styles.uploadContent}>
               <div className={styles.loadingSpinner}>⏳</div>
               <h3 className={styles.uploadTitle}>
                 Analyzing your resume...
@@ -104,7 +104,7 @@ export function ResumeUpload({ onResumeExtracted }: ResumeUploadProps) {
               </p>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+            <div className={styles.uploadContent}>
               <div className={styles.uploadIcon}>📄</div>
               <h3 className={styles.uploadTitle}>
                 {isDragging ? 'Drop your resume here' : 'Upload your resume'}

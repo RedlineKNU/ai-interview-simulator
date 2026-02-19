@@ -11,7 +11,6 @@ export default function AnalysisPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Retrieve resume data from localStorage
     const storedData = localStorage.getItem('resumeData');
     if (storedData) {
       try {
@@ -22,7 +21,6 @@ export default function AnalysisPage() {
         router.push('/');
       }
     } else {
-      // No resume data, redirect to upload
       router.push('/');
     }
     setLoading(false);
@@ -51,7 +49,7 @@ export default function AnalysisPage() {
   }
 
   if (!resumeData) {
-    return null; // Will redirect in useEffect
+    return null;
   }
 
   return (

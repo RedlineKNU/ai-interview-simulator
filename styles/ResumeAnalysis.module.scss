@@ -53,10 +53,121 @@
   text-align: center;
 }
 
+.statusIcon {
+  font-size: 64px;
+  margin-bottom: 1.5rem;
+}
+
+.statusTitle {
+  margin-bottom: 0.5rem;
+}
+
+.statusSubtitle {
+  color: $text-secondary;
+}
+
+.errorMessage {
+  margin-bottom: 1.5rem;
+}
+
+.statusIcon {
+  font-size: 64px;
+  margin-bottom: 1.5rem;
+}
+
+.statusTitle {
+  margin-bottom: 0.5rem;
+}
+
+.statusSubtitle {
+  color: $text-secondary;
+}
+
 .overallScoreCard {
   margin-bottom: 1.5rem;
   border-left: 6px solid $color-primary;
   box-shadow: $shadow-md;
+}
+
+.overallScoreLayout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.overallScoreText {
+  margin-bottom: 1rem;
+}
+
+.overallScoreDescription {
+  line-height: 1.7;
+  color: $text-secondary;
+}
+
+.overallScoreDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.overallScoreValueWrapper {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.overallScoreValue {
+  font-size: 4rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.overallScoreSuffix {
+  font-size: 0.875rem;
+  color: $text-secondary;
+}
+
+.scoreChip {
+  margin-top: 0.5rem;
+}
+
+.overallScoreLayout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.overallScoreText {
+  margin-bottom: 1rem;
+}
+
+.overallScoreDescription {
+  line-height: 1.7;
+  color: $text-secondary;
+}
+
+.overallScoreValueWrapper {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.overallScoreValue {
+  font-size: 4rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.overallScoreSuffix {
+  font-size: 0.875rem;
+  color: $text-secondary;
+}
+
+.scoreChip {
+  margin-top: 0.5rem;
 }
 
 .scoreGrid {
@@ -74,6 +185,14 @@
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
+
+    .cardIcon {
+      font-size: 28px;
+    }
+
+    .cardIcon {
+      font-size: 28px;
+    }
 
     h3 {
       font-size: 1.125rem;
@@ -183,6 +302,14 @@
   }
 }
 
+.successIcon {
+  color: $color-success;
+}
+
+.warningIcon {
+  color: $color-warning;
+}
+
 .recommendationsCard {
   margin-bottom: 1.5rem;
 
@@ -247,6 +374,14 @@
       width: 100%;
     }
   }
+}
+
+.secondaryAction {
+  min-width: 200px;
+}
+
+.primaryAction {
+  min-width: 250px;
 }
 
 // Score color classes
